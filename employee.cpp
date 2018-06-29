@@ -3,7 +3,7 @@ using namespace std;
 
 //Step 7 implement select functions as provided here:
 
-employee::employee(char * name, char * street, char * zip, int id)
+employee::employee(char * name, char * street, char * zip, int id): employee_id(0), person(name, street, zip), root(0)
 {
 	//Avoid accessing the base class members here.
         //Instead, use an initialization list to cause the
@@ -18,7 +18,7 @@ employee::employee(char * name, char * street, char * zip, int id)
 //Think about how to use the member functions inherited to
 //initialize the new hourly employee.
 //Avoid use of the = operator as it does a shallow copy!
-hourly_employee::hourly_employee(const person & input)
+hourly_employee::hourly_employee(const person & input): employee(input)
 {
 
 }
@@ -31,6 +31,13 @@ hourly_employee::hourly_employee(const person & input)
 //the BST containing performance review information
 void employee::display() const
 {
+    person::display();
+    cout << "emp ID: " << employee_id << endl;
+    if(root)
+    {
+        cout << "personnel record contains: " << endl;
+    display(root);
+    }
 
 }
 
@@ -44,7 +51,10 @@ void employee::display() const
 //functions available within the hierarchy
 void employee::display(node * root) const
 {
-
+    if(!root){return 0;}
+    display(root -> go_left());
+    root -> display();
+    display(root -> go_right());
 
 }
 
